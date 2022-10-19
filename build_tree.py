@@ -14,13 +14,17 @@ def decision_tree_learning(dataset, depth=0):
         Node : Root node.
         int : Maximum depth of tree.
     """
+
+    # if all labels are the same, return leaf_node
     if len(np.unique(dataset[:,-1])) == 1:
         leaf_node = Node(split=Split(),depth=depth)
         return leaf_node
+
+    # else, create a new node with new Split object to split the dataset
     else:
         optimal_split = find_split(dataset)
         left_dataset = dataset[dataset[:,optimal_split.attribute_index]<=optimal_split.threshold]
-        right_dataset = dataset[dataset[:,optimal_split.attribute_index]<=optimal_split.threshold]
+        right_dataset = dataset[dataset[:,optimal_split.attribute_index]>optimal_split.threshold]
 
         left_child=decision_tree_learning(left_dataset, depth=depth+1)
         right_child=decision_tree_learning(right_dataset, depth=depth+1)
