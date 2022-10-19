@@ -1,0 +1,4 @@
+1) build_tree: Cynthia
+2) test_tree: Astrid
+3) visualise_tree (bonus): Priya
+4) cross validation metrics
