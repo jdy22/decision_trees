@@ -1,7 +1,6 @@
 class Node:
-    def __init__(self, split_attribute, split_value, left_child, right_child, depth, is_leaf=False):
-        self.split_attribute = split_attribute
-        self.split_value = split_value
+    def __init__(self, split, left_child, right_child, depth, is_leaf=False):
+        self.split = split
         self.left_child = left_child
         self.right_child = right_child
         self.depth = depth
