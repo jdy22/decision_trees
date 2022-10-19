@@ -2,7 +2,7 @@ import numpy as np
 from info_gain import calc_info_gain
 
 class Split:
-    def __init__(self, attribute_index, threshold):
+    def __init__(self, attribute_index=None, threshold=None):
         self.attribute_index = attribute_index
         self.threshold = threshold
 
@@ -45,7 +45,8 @@ def find_split(parent_dataset):
 
 if __name__ == "__main__":
     dataset = np.loadtxt("wifi_db/clean_dataset.txt")
-    dataset[:, [3, 0]] = dataset[:, [0, 3]]
+    #remove the testing feature
+    #dataset[:, [3, 0]] = dataset[:, [0, 3]]
     split = find_split(dataset)
     print(type(split))
     print(split.attribute_index)
