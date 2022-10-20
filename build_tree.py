@@ -17,7 +17,7 @@ def decision_tree_learning(dataset, depth=0):
 
     # if all labels are the same, return leaf_node
     if len(np.unique(dataset[:,-1])) == 1:
-        leaf_node = Node(split=Split(),depth=depth)
+        leaf_node = Node(split=Split(),depth=depth,label=int(dataset[0, -1]))  # save label to leaf node as int
         return leaf_node
 
     # else, create a new node with new Split object to split the dataset
@@ -28,7 +28,7 @@ def decision_tree_learning(dataset, depth=0):
 
         left_child=decision_tree_learning(left_dataset, depth=depth+1)
         right_child=decision_tree_learning(right_dataset, depth=depth+1)
-        current_node = Node(split=optimal_split, left_child=left_child, right_child = right_child, depth=depth, is_leaf=False)
+        current_node = Node(split=optimal_split, left_child=left_child, right_child=right_child, depth=depth, is_leaf=False)
 
     print(current_node.depth)
     return current_node
