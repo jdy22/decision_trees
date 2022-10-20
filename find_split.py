@@ -29,6 +29,8 @@ def find_split(parent_dataset):
         attribute_values = parent_dataset[:, attribute_index]
         sorted_attribute_values = np.sort(attribute_values)
         for i in range(len(sorted_attribute_values)-1):
+            if sorted_attribute_values[i] == sorted_attribute_values[i+1]:
+                continue
             threshold = (sorted_attribute_values[i] + sorted_attribute_values[i+1])/2
             split = Split(attribute_index, threshold)
             left_dataset = parent_dataset[parent_dataset[:,attribute_index]<=threshold]
