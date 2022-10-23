@@ -30,7 +30,7 @@ def decision_tree_learning(dataset, depth=0):
         right_child=decision_tree_learning(right_dataset, depth=depth+1)
         current_node = Node(split=optimal_split, left_child=left_child, right_child=right_child, depth=depth)
 
-    print(current_node.depth)
+    # print(current_node.depth) # removing this checking feature
     return current_node
 
 if __name__ == "__main__":
