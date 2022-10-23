@@ -19,7 +19,7 @@ def predict_label(trained_tree: Node, test_db):
         current_node = trained_tree
         # traversing between left and right node depending on current node's split threshold until leaf node is reached
         while not current_node.is_leaf:
-            if instance[int(current_node.split.attribute_index)] <= current_node.split.threshold:
+            if instance[current_node.split.attribute_index] <= current_node.split.threshold: # removed int from the attribute value as spec states they should be treated as continuous variables
                 current_node = current_node.left_child
             else:
                 current_node = current_node.right_child
