@@ -41,6 +41,20 @@ def calc_accuracy(confusion_matrix):
     return accuracy
 
 
+def calc_accuracy_direct(correct_labels, predicted_labels):
+    """ Calculate the accuracy directly without the confusion matrix.
+
+    Args:
+        correct_labels (np.array) : the correct labels.
+        predicted_labels (np.array) : the predicted labels.
+
+    Returns:
+        accuracy (float) : accuracy.
+    """
+    accuracy = np.sum(correct_labels == predicted_labels) / len(correct_labels)
+    return accuracy
+
+
 def calc_precision(confusion_matrix):
     """ Calculate the precision per class from the confusion matrix.
     

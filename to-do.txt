@@ -1,4 +1,7 @@
-1) build_tree: Cynthia
-2) test_tree: Astrid
-3) visualise_tree (bonus): Priya
-4) cross validation metrics
+1) Make sure code works for noisy dataset (convert labels to integers)
+2) Cross-validation for non-pruned tree (10-fold, option 1) and get evaluation metrics and average
+3) Write prune tree function - discuss
+4) Cross-validation for pruned tree (option 2)
+
+
+visualise_tree (bonus): Priya (only if time)
