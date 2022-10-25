@@ -1,7 +1,10 @@
-1) Make sure code works for noisy dataset (convert labels to integers)
-2) Cross-validation for non-pruned tree (10-fold, option 1) and get evaluation metrics and average
-3) Write prune tree function - discuss
-4) Cross-validation for pruned tree (option 2)
+1) Make sure code works for noisy dataset (convert labels to integers) - Cynthia
+2) Cross-validation for non-pruned tree (10-fold, option 1) and get evaluation metrics and average - Cynthia
+3) Write function to prune tree until no change (while loop) - Joanna
+4) Cross-validation for pruned tree (option 2) - Astrid and Priya
+5) Report - Joanna
+6) Clean code when all code is finished - everyone
+7) Readme file and make sure code works on lab machines - everyone
 
 
 visualise_tree (bonus): Priya (only if time)
