@@ -4,8 +4,10 @@ from build_tree import decision_tree_learning
 from prediction import predict_label
 from evaluation import calc_accuracy_direct
 
-def prune_tree(root_node, training_set, validation_set):
+def prune_tree_once(root_node, training_set, validation_set):
     """ Prune tree according to validation error.
+
+    One pass through the tree to determine which nodes can be pruned.
 
     Args:
         root_node (Node) : Root node of tree to prune.
@@ -60,9 +62,9 @@ def prune_tree(root_node, training_set, validation_set):
         is_left_pruned = False
         is_right_pruned = False
         if not left_child.is_leaf:
-            root_node.left_child, is_left_pruned = prune_tree(left_child, left_training_dataset, left_validation_dataset)
+            root_node.left_child, is_left_pruned = prune_tree_once(left_child, left_training_dataset, left_validation_dataset)
         if not right_child.is_leaf:
-            root_node.right_child, is_right_pruned = prune_tree(right_child, right_training_dataset, right_validation_dataset)
+            root_node.right_child, is_right_pruned = prune_tree_once(right_child, right_training_dataset, right_validation_dataset)
 
         if is_left_pruned or is_right_pruned:
             is_pruned = True
@@ -70,8 +72,33 @@ def prune_tree(root_node, training_set, validation_set):
     return root_node, is_pruned
 
 
+def prune_tree(root_node, training_set, validation_set):
+    """ Prune tree according to validation error.
+
+    Calls prune_tree_once over and over until no more nodes need pruning.
+
+    Args:
+        root_node (Node) : Root node of tree to prune.
+        training_set (np.array):  Nx8 array where N = number of training samples, column 0 to 6 are attributes and 7 is label.
+        validation_set (np.array):  Kx8 array where K = number of validation samples, column 0 to 6 are attributes and 7 is label.
+
+    Returns:
+        Node : Root node of pruned tree.
+    """
+    continue_pruning = True
+
+    while continue_pruning:
+        print("Pruning once")
+        root_node, continue_pruning = prune_tree_once(root_node, training_set, validation_set)
+        print(continue_pruning)
+        print()
+
+    print("Pruning finished")
+    return root_node
+
+
 if __name__ == "__main__":
-    seed = 50000
+    seed = 25000
     random_generator = default_rng(seed)
     
     dataset = np.loadtxt("wifi_db/clean_dataset.txt")
@@ -81,5 +108,4 @@ if __name__ == "__main__":
     training_dataset = dataset[shuffled_indices[200:]]
     
     root_node = decision_tree_learning(training_dataset)
-    new_root_node, is_pruned = prune_tree(root_node, training_dataset, validation_dataset)
-    print(is_pruned)
+    new_root_node = prune_tree(root_node, training_dataset, validation_dataset)
