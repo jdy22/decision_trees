@@ -6,3 +6,9 @@ class Node:
         self.depth = depth
         self.is_leaf = is_leaf
         self.label = label # to identify labelling of the leaf node
+
+    # method to find max depth of tree (Node)
+    def max_depth(self):
+        left_child_depth = self.left_child.max_depth() if self.left_child else 0
+        right_child_depth = self.right_child.max_depth() if self.right_child else 0
+        return max(left_child_depth, right_child_depth) + 1

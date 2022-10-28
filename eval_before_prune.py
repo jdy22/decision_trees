@@ -76,15 +76,18 @@ def k_cross_validation(k, dataset, rg):
         avg_recall (np.array): (R,)-dimensional vector where R = number of classes
         avg_precision (np.array): (R,)-dimensional vector where R = number of classes
         avg_f1_score (float): (R,)-dimensional vector where R = number of classes
+        avg_max_depth (float): avg max depth of trees
+
     """
     n_instances = len(dataset[:,1])
 
-    # initiate list to store metrics from each cross-validation
+    # initiate list to store metrics from each cross-validation and max-depth
     k_confusion_matrices = []
     k_accuracies = []
     k_recalls = []
     k_precisions = []
     k_f1_scores = []
+    k_max_depth = []
     
     # cross-validation
     for (train_indices, test_indices) in train_test_k_fold(k, n_instances, rg):
@@ -97,12 +100,13 @@ def k_cross_validation(k, dataset, rg):
         # evaluation metrics
         confusion_matrix, accuracy, precision, recall, f1_score = evaluate_tree(test_data, trained_tree)
 
-        # add each metric into list
+        # add each metric and max-depth into list
         k_confusion_matrices.append(confusion_matrix)
         k_accuracies.append(accuracy)
         k_recalls.append(recall)
         k_precisions.append(precision)
         k_f1_scores.append(f1_score)
+        k_max_depth.append(trained_tree.max_depth())
 
     # calculate avg
     avg_confusion_matrix = sum(k_confusion_matrices)/k
@@ -110,8 +114,9 @@ def k_cross_validation(k, dataset, rg):
     avg_recall = sum(k_recalls)/k
     avg_precision = sum(k_precisions)/k
     avg_f1_score = sum(k_f1_scores)/k
+    avg_max_depth = sum(k_max_depth)/k
 
-    return avg_confusion_matrix, avg_accuracy, avg_recall, avg_precision, avg_f1_score
+    return avg_confusion_matrix, avg_accuracy, avg_recall, avg_precision, avg_f1_score, avg_max_depth
 
 
 
@@ -120,7 +125,7 @@ if __name__ == "__main__":
     random_generator = default_rng(seed)
     clean_dataset = np.loadtxt("wifi_db/clean_dataset.txt") 
     noisy_dataset = np.loadtxt("wifi_db/noisy_dataset.txt")
-    conf_matrix_clean, accuracy_clean, recall_clean, precision_clean, f1_clean = k_cross_validation(10, clean_dataset,random_generator)
-    conf_matrix_noisy, accuracy_noisy, recall_noisy, precision_noisy, f1_noisy = k_cross_validation(10, noisy_dataset,random_generator)
-    print(conf_matrix_clean, accuracy_clean, recall_clean, precision_clean, f1_clean)
-    print(conf_matrix_noisy, accuracy_noisy, recall_noisy, precision_noisy, f1_noisy)
+    conf_matrix_clean, accuracy_clean, recall_clean, precision_clean, f1_clean, max_depth = k_cross_validation(10, clean_dataset,random_generator)
+    conf_matrix_noisy, accuracy_noisy, recall_noisy, precision_noisy, f1_noisy, max_depth = k_cross_validation(10, noisy_dataset,random_generator)
+    print(conf_matrix_clean, accuracy_clean, recall_clean, precision_clean, f1_clean, max_depth)
+    print(conf_matrix_noisy, accuracy_noisy, recall_noisy, precision_noisy, f1_noisy, max_depth)

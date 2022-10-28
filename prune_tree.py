@@ -91,7 +91,6 @@ def prune_tree(root_node, training_set, validation_set):
         # print("Pruning once")
         root_node, continue_pruning = prune_tree_once(root_node, training_set, validation_set)
         # print(continue_pruning)
-        # print()
 
     # print("Pruning finished")
     return root_node
@@ -109,3 +108,4 @@ if __name__ == "__main__":
     
     root_node = decision_tree_learning(training_dataset)
     new_root_node = prune_tree(root_node, training_dataset, validation_dataset)
+    # print(new_root_node.max_depth()) - just testing to confirm that method works
