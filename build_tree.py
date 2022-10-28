@@ -42,3 +42,4 @@ if __name__ == "__main__":
     print(root_node.split.attribute_index)
     print(root_node.split.threshold)
     print(root_node.depth)
+

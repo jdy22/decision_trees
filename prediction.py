@@ -3,6 +3,7 @@ from node_class import Node
 from build_tree import decision_tree_learning
 
 
+
 def predict_label(trained_tree: Node, test_db):
     """ Predict label for test_db using the trained_tree.
 
