@@ -28,14 +28,13 @@ def tree_visual(node, tree, count, spread, drop, x, y):
 
     Args:
         node (Node) : Root node of trained decision tree
-        tree (matplotlib subplot) : plot of tree visualisation 
+        tree (matplotlib subplot) : Plot of tree visualisation 
         count (int) : Keeps count of the layer of tree
         spread (float) : The distance spread of the entire tree
         drop (int): The distance drop between tree layers
         x (int) : The x coorindate of the box location
         y (int) : The y coorindate of the box location
-    Returns: 
-        tree : plot containing tree visualisation 
+    Returns: /
     """
     if node.is_leaf == False: 
         tree.text(x,y, visualisation_label(node), color = "black", bbox = dict(facecolor="white", edgecolor = "black"))
