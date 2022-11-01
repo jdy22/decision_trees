@@ -1,5 +1,4 @@
-import numpy as np 
-import matplotlib
+import numpy as np
 import matplotlib.pyplot as plt
 from build_tree import decision_tree_learning
 

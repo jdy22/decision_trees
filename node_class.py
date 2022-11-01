@@ -12,3 +12,5 @@ class Node:
         left_child_depth = self.left_child.max_depth() if self.left_child else 0
         right_child_depth = self.right_child.max_depth() if self.right_child else 0
         return max(left_child_depth, right_child_depth) + 1
+
+        #

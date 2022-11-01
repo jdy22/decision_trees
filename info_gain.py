@@ -49,3 +49,4 @@ if __name__ == "__main__":
     right_dataset = parent_dataset[2:, :]
     info_gain = calc_info_gain(parent_dataset, left_dataset, right_dataset)
     print(info_gain)
+    #
