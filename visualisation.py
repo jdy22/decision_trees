@@ -49,7 +49,7 @@ def tree_visual(node, tree, count, spread, drop, x, y):
         tree.text(x,y, visualisation_label(node) , color = "white", bbox = dict(facecolor="red", edgecolor = "black"))
         
 
-fig, graph = plt.subplots(figsize=(150, 70))
+fig, graph = plt.subplots(figsize=(200, 100))
 tree_visual(root_node, graph, 1, 1500,10,0,0)
 plt.axis('off')
 plt.savefig("visualisation.png")
