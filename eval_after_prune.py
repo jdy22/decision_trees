@@ -6,10 +6,9 @@ from prune_tree import prune_tree
 from eval_before_prune import train_test_k_fold
 
 
-
 def k_cross_validation_option_two(k, inner_folds, dataset, rg):
     """
-    Option 2 of cross-validation
+    Function to output metrics for Option 2 of k cross-validation
     Args :
         k (int): number of outer folds to cross-validate
         inner_folds(int): number of inner folds per k-fold
@@ -19,12 +18,11 @@ def k_cross_validation_option_two(k, inner_folds, dataset, rg):
     Return :
         outer_avg_confusion_matrix (np.array): 4x4 array
         outer_avg_accuracy (float): overall avg accuracy in k-cross validation
-        outer_avg_recall (np.array): (R,)-dimensional vector where R = number of classes
-        outer_avg_precision (np.array): (R,)-dimensional vector where R = number of classes
-        outer_avg_f1_score (float): (R,)-dimensional vector where R = number of classes
+        outer_avg_recall (np.array): (R,)-dimensional vector where R = number of classes for overall recall
+        outer_avg_precision (np.array): (R,)-dimensional vector where R = number of classes for overall precision
+        outer_avg_f1_score (float): (R,)-dimensional vector where R = number of classes for overall f1
         outer_avg_max_depth (float): overall avg max depth of pruned trees
     """
-    n_instances = len(dataset[:, 1])
 
     # initiate list to store metrics and max depth from each outer cross-validation
     outer_confusion_matrices = []
@@ -36,6 +34,7 @@ def k_cross_validation_option_two(k, inner_folds, dataset, rg):
 
     # cross-validation outer loop
     # split to train-val data & test data
+    n_instances = len(dataset[:, 1])
     for (trainval_indices, test_indices) in train_test_k_fold(k, n_instances, rg):
         trainval_data = dataset[trainval_indices,]
         test_data = dataset[test_indices,]
@@ -54,11 +53,11 @@ def k_cross_validation_option_two(k, inner_folds, dataset, rg):
             inner_train_data = trainval_data[inner_train_indices, ]
             inner_val_data = trainval_data[inner_val_indices, ]
             # use train data to train tree
-            trained_tree = decision_tree_learning(inner_train_data)  # Node
+            trained_tree = decision_tree_learning(inner_train_data)
 
             # use val data to decide how we should prune tree
             pruned_tree = prune_tree(trained_tree, inner_train_data, inner_val_data)
-            # print(pruned_tree.max_depth())
+
             # evaluation metrics for pruned tree
             confusion_matrix, accuracy, precision, recall, f1_score = evaluate_tree(test_data, pruned_tree)
 
@@ -102,8 +101,8 @@ if __name__ == "__main__":
     random_generator = default_rng(seed)
     clean_dataset = np.loadtxt("wifi_db/clean_dataset.txt")
     noisy_dataset = np.loadtxt("wifi_db/noisy_dataset.txt")
-    conf_matrix_clean, accuracy_clean, recall_clean, precision_clean, f1_clean, max_depth = k_cross_validation_option_two(10, 10, clean_dataset, random_generator)
-    conf_matrix_noisy, accuracy_noisy, recall_noisy, precision_noisy, f1_noisy, max_depth = k_cross_validation_option_two(10, 10, noisy_dataset, random_generator)
-    print(conf_matrix_clean, accuracy_clean, recall_clean, precision_clean, f1_clean, max_depth)
-    print(conf_matrix_noisy, accuracy_noisy, recall_noisy, precision_noisy, f1_noisy, max_depth)
+    conf_matrix_clean, accuracy_clean, recall_clean, precision_clean, f1_clean, max_depth_clean = k_cross_validation_option_two(10, 10, clean_dataset, random_generator)
+    conf_matrix_noisy, accuracy_noisy, recall_noisy, precision_noisy, f1_noisy, max_depth_noisy = k_cross_validation_option_two(10, 10, noisy_dataset, random_generator)
+    print(conf_matrix_clean, accuracy_clean, recall_clean, precision_clean, f1_clean, max_depth_clean)
+    print(conf_matrix_noisy, accuracy_noisy, recall_noisy, precision_noisy, f1_noisy, max_depth_noisy)
 

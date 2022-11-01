@@ -1,7 +1,7 @@
-
 from find_split import find_split, Split
 from node_class import Node
 import numpy as np
+
 
 def decision_tree_learning(dataset, depth=0):
     """ Recursive function to build the tree.
@@ -12,12 +12,11 @@ def decision_tree_learning(dataset, depth=0):
 
     Returns:
         Node : Root node.
-        int : Maximum depth of tree.
     """
 
     # if all labels are the same, return leaf_node
     if len(np.unique(dataset[:,-1])) == 1:
-        leaf_node = Node(split=Split(),depth=depth,is_leaf=True,label=int(dataset[0, -1]))  # save label to leaf node as int
+        leaf_node = Node(split=Split(),depth=depth,is_leaf=True,label=int(dataset[0, -1]))
         return leaf_node
 
     # else, create a new node with new Split object to split the dataset
@@ -30,7 +29,6 @@ def decision_tree_learning(dataset, depth=0):
         right_child=decision_tree_learning(right_dataset, depth=depth+1)
         current_node = Node(split=optimal_split, left_child=left_child, right_child=right_child, depth=depth)
 
-    # print(current_node.depth) # removing this checking feature
     return current_node
 
 if __name__ == "__main__":

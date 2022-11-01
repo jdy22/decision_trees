@@ -3,6 +3,7 @@ from numpy.random import default_rng
 from prediction import predict_label
 from build_tree import decision_tree_learning
 
+
 def calc_confusion_matrix(correct_labels, predicted_labels):
     """ Compute the confusion matrix.
 

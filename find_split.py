@@ -1,6 +1,7 @@
 import numpy as np
 from info_gain import calc_info_gain
 
+
 class Split:
     def __init__(self, attribute_index=None, threshold=None):
         self.attribute_index = attribute_index
@@ -11,8 +12,7 @@ def find_split(parent_dataset):
     """ Find best split for dataset based on maximum information gain.
 
     Go through each attribute (sorted) and each possible threshold and compute the information gain for each split.
-    (Possibly write split class).
-    Store information gains in np.array(?) and return split that gives maximum information gain.
+    Store information gains in np.array and return split that gives maximum information gain.
 
     Args:
         parent_dataset (np.array) : Nx8 array where N = number of samples, column 0 to 6 are attributes and 7 is label.
@@ -47,8 +47,6 @@ def find_split(parent_dataset):
 
 if __name__ == "__main__":
     dataset = np.loadtxt("wifi_db/clean_dataset.txt")
-    #remove the testing feature
-    #dataset[:, [3, 0]] = dataset[:, [0, 3]]
     split = find_split(dataset)
     print(type(split))
     print(split.attribute_index)

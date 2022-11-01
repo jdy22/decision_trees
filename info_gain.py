@@ -3,8 +3,6 @@ import numpy as np
 def calc_entropy(dataset):
     """ Calculate entropy of dataset.
 
-    Only works if dataset has more than one row.
-
     Args:
         dataset (np.array) : Nx8 array where N = number of samples, column 0 to 6 are attributes and 7 is label.
 
@@ -22,7 +20,6 @@ def calc_entropy(dataset):
 
 def calc_info_gain(parent_dataset, left_dataset, right_dataset):
     """ Calculate information gain from splitting parent_datset into left_dataset and right_dataset.
-    Call calc_entropy. Remember to weight the left and right entropies according to dataset size!
 
     Args:
         parent_dataset (np.array) : Nx8 array
@@ -40,6 +37,7 @@ def calc_info_gain(parent_dataset, left_dataset, right_dataset):
     entropy_left = calc_entropy(left_dataset)
     entropy_right = calc_entropy(right_dataset)
 
+    # calculate info_gain from difference of entropy_parent and weighted left and right child entropies
     info_gain = entropy_parent - (size_left/size_parent)*entropy_left - (size_right/size_parent)*entropy_right
 
     return info_gain

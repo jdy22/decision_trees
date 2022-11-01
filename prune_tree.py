@@ -4,6 +4,7 @@ from build_tree import decision_tree_learning
 from prediction import predict_label
 from evaluation import calc_accuracy_direct
 
+
 def prune_tree_once(root_node, training_set, validation_set):
     """ Prune tree according to validation error.
 
@@ -28,28 +29,21 @@ def prune_tree_once(root_node, training_set, validation_set):
             return root_node, False
 
         predicted_labels = predict_label(root_node, validation_set).astype(int)
-        # print(f"Predicted labels not pruned: {predicted_labels}")
         correct_labels = validation_set[:, -1].astype(int)
-        # print(f"Correct labels: {correct_labels}")
         accuracy_not_pruned = calc_accuracy_direct(correct_labels, predicted_labels)
-        # print(f"Accuracy not pruned: {accuracy_not_pruned}")
 
         training_set_labels = training_set[:, -1].astype(int)
         majority_label = np.argmax(np.bincount(training_set_labels))
         predicted_labels_pruned = (majority_label * np.ones(len(correct_labels))).astype(int)
-        # print(f"Predicted labels pruned: {predicted_labels_pruned}")
         accuracy_pruned = calc_accuracy_direct(correct_labels, predicted_labels_pruned)
-        # print(f"Accuracy pruned: {accuracy_pruned}")
 
         if accuracy_pruned >= accuracy_not_pruned:
             root_node.left_child = None
             root_node.right_child = None
             root_node.is_leaf = True
             root_node.label = majority_label
-            # print("Pruned")
             return root_node, True
         else:
-            # print("Not Pruned")
             return root_node, False
 
     else:
@@ -88,11 +82,7 @@ def prune_tree(root_node, training_set, validation_set):
     continue_pruning = True
 
     while continue_pruning:
-        # print("Pruning once")
         root_node, continue_pruning = prune_tree_once(root_node, training_set, validation_set)
-        # print(continue_pruning)
-
-    # print("Pruning finished")
     return root_node
 
 
@@ -108,4 +98,4 @@ if __name__ == "__main__":
     
     root_node = decision_tree_learning(training_dataset)
     new_root_node = prune_tree(root_node, training_dataset, validation_dataset)
-    # print(new_root_node.max_depth()) - just testing to confirm that method works
+

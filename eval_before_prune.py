@@ -1,14 +1,9 @@
 import numpy as np
 from numpy.random import default_rng
 from evaluation import evaluate_tree
-from prediction import predict_label
 from build_tree import decision_tree_learning
 
-"""
-Split data using 10-cross validation first, build tree using 9 folds and test tree using the remaining 1 fold
-"""
 
-# taken from lab
 def k_fold_split(n_splits, n_instances, random_generator):
     """ Split n_instances into n mutually exclusive splits at random.
     
@@ -30,7 +25,7 @@ def k_fold_split(n_splits, n_instances, random_generator):
 
     return split_indices
 
-# taken from lab
+
 def train_test_k_fold(n_folds, n_instances, random_generator=default_rng()):
     """ Generate train and test indices at each fold.
     
@@ -54,8 +49,6 @@ def train_test_k_fold(n_folds, n_instances, random_generator=default_rng()):
         test_indices = split_indices[k]
 
         # combine remaining splits as train
-        # this solution is fancy and worked for me
-        # feel free to use a more verbose solution that's more readable
         train_indices = np.hstack(split_indices[:k] + split_indices[k+1:])
 
         folds.append([train_indices, test_indices])
@@ -108,7 +101,7 @@ def k_cross_validation(k, dataset, rg):
         k_f1_scores.append(f1_score)
         k_max_depth.append(trained_tree.max_depth())
 
-    # calculate avg
+    # calculate average
     avg_confusion_matrix = sum(k_confusion_matrices)/k
     avg_accuracy = sum(k_accuracies)/k
     avg_recall = sum(k_recalls)/k
@@ -119,13 +112,12 @@ def k_cross_validation(k, dataset, rg):
     return avg_confusion_matrix, avg_accuracy, avg_recall, avg_precision, avg_f1_score, avg_max_depth
 
 
-
 if __name__ == "__main__":
     seed = 25000
     random_generator = default_rng(seed)
     clean_dataset = np.loadtxt("wifi_db/clean_dataset.txt") 
     noisy_dataset = np.loadtxt("wifi_db/noisy_dataset.txt")
-    conf_matrix_clean, accuracy_clean, recall_clean, precision_clean, f1_clean, max_depth = k_cross_validation(10, clean_dataset,random_generator)
-    conf_matrix_noisy, accuracy_noisy, recall_noisy, precision_noisy, f1_noisy, max_depth = k_cross_validation(10, noisy_dataset,random_generator)
-    print(conf_matrix_clean, accuracy_clean, recall_clean, precision_clean, f1_clean, max_depth)
-    print(conf_matrix_noisy, accuracy_noisy, recall_noisy, precision_noisy, f1_noisy, max_depth)
+    conf_matrix_clean, accuracy_clean, recall_clean, precision_clean, f1_clean, max_depth_clean = k_cross_validation(10, clean_dataset,random_generator)
+    conf_matrix_noisy, accuracy_noisy, recall_noisy, precision_noisy, f1_noisy, max_depth_noisy = k_cross_validation(10, noisy_dataset,random_generator)
+    print(conf_matrix_clean, accuracy_clean, recall_clean, precision_clean, f1_clean, max_depth_clean)
+    print(conf_matrix_noisy, accuracy_noisy, recall_noisy, precision_noisy, f1_noisy, max_depth_noisy)
