@@ -69,13 +69,13 @@ def k_cross_validation_option_two(k, inner_folds, dataset, rg):
             inner_f1_scores.append(f1_score)
             inner_max_depth.append(pruned_tree.max_depth())
 
-            # calculate inner avg for metrics and max depth
-            inner_avg_confusion_matrix = sum(inner_confusion_matrices) / inner_folds
-            inner_avg_accuracy = sum(inner_accuracies) / inner_folds
-            inner_avg_recall = sum(inner_recalls) / inner_folds
-            inner_avg_precision = sum(inner_precisions) / inner_folds
-            inner_avg_f1_score = sum(inner_f1_scores) / inner_folds
-            inner_avg_max_depth = sum(inner_max_depth) / inner_folds
+        # calculate inner avg for metrics and max depth
+        inner_avg_confusion_matrix = sum(inner_confusion_matrices) / inner_folds
+        inner_avg_accuracy = sum(inner_accuracies) / inner_folds
+        inner_avg_recall = sum(inner_recalls) / inner_folds
+        inner_avg_precision = sum(inner_precisions) / inner_folds
+        inner_avg_f1_score = sum(inner_f1_scores) / inner_folds
+        inner_avg_max_depth = sum(inner_max_depth) / inner_folds
 
         # add each metric and max depth into outer list
         outer_confusion_matrices.append(inner_avg_confusion_matrix)
@@ -86,12 +86,12 @@ def k_cross_validation_option_two(k, inner_folds, dataset, rg):
         outer_max_depth.append(inner_avg_max_depth)
 
         # calculate outer avg
-        outer_avg_confusion_matrix = sum(outer_confusion_matrices) / k
-        outer_avg_accuracy = sum(outer_accuracies) / k
-        outer_avg_recall = sum(outer_recalls) / k
-        outer_avg_precision = sum(outer_precisions) / k
-        outer_avg_f1_score = sum(outer_f1_scores) / k
-        outer_avg_max_depth = sum(outer_max_depth) / k
+    outer_avg_confusion_matrix = sum(outer_confusion_matrices) / k
+    outer_avg_accuracy = sum(outer_accuracies) / k
+    outer_avg_recall = sum(outer_recalls) / k
+    outer_avg_precision = sum(outer_precisions) / k
+    outer_avg_f1_score = sum(outer_f1_scores) / k
+    outer_avg_max_depth = sum(outer_max_depth) / k
 
     return outer_avg_confusion_matrix, outer_avg_accuracy, outer_avg_recall, outer_avg_precision, outer_avg_f1_score, outer_avg_max_depth
 
@@ -105,4 +105,3 @@ if __name__ == "__main__":
     conf_matrix_noisy, accuracy_noisy, recall_noisy, precision_noisy, f1_noisy, max_depth_noisy = k_cross_validation_option_two(10, 10, noisy_dataset, random_generator)
     print(conf_matrix_clean, accuracy_clean, recall_clean, precision_clean, f1_clean, max_depth_clean)
     print(conf_matrix_noisy, accuracy_noisy, recall_noisy, precision_noisy, f1_noisy, max_depth_noisy)
-    #

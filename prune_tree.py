@@ -25,15 +25,20 @@ def prune_tree_once(root_node, training_set, validation_set):
     right_child = root_node.right_child
 
     if left_child.is_leaf and right_child.is_leaf:
+        training_set_labels = training_set[:, -1].astype(int)
+        majority_label = np.argmax(np.bincount(training_set_labels))
+
         if len(validation_set) == 0:
-            return root_node, False
+            root_node.left_child = None
+            root_node.right_child = None
+            root_node.is_leaf = True
+            root_node.label = majority_label
+            return root_node, True
 
         predicted_labels = predict_label(root_node, validation_set).astype(int)
         correct_labels = validation_set[:, -1].astype(int)
         accuracy_not_pruned = calc_accuracy_direct(correct_labels, predicted_labels)
 
-        training_set_labels = training_set[:, -1].astype(int)
-        majority_label = np.argmax(np.bincount(training_set_labels))
         predicted_labels_pruned = (majority_label * np.ones(len(correct_labels))).astype(int)
         accuracy_pruned = calc_accuracy_direct(correct_labels, predicted_labels_pruned)
 
@@ -98,4 +103,3 @@ if __name__ == "__main__":
     
     root_node = decision_tree_learning(training_dataset)
     new_root_node = prune_tree(root_node, training_dataset, validation_dataset)
-    #

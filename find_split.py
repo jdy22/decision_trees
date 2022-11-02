@@ -51,7 +51,6 @@ if __name__ == "__main__":
     print(type(split))
     print(split.attribute_index)
     print(split.threshold)
-    #
             
 
 
